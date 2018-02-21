@@ -1,21 +1,27 @@
 package com.siddapps.android.p97
 
+import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import android.support.design.widget.Snackbar
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import com.siddapps.android.p97.data.APIResponse
 import com.siddapps.android.p97.data.Dictionary
 import com.siddapps.android.p97.network.APIClient
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
-    val dictionary = Dictionary.instance
+class BirthdayDialog(private val c: Context?) : Dialog(c) {
+    val TAG = "BirthdayDialog"
+
+    init {
+        var dictionary = Dictionary.instance
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         updateUI()
 
         info_button.setOnClickListener({
@@ -34,17 +40,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun updateUI() {
-        text_1.text = dictionary?.interviewTestKey1
-        text_2.text = dictionary?.interviewTestKey2
-        cta1.text = dictionary?.interviewTestKey3
-        cta2.text = dictionary?.interviewTestKey4
+        Log.e(TAG,Dictionary.instance?.interviewTestKey1)
+        text_1.text = Dictionary.instance?.interviewTestKey1
+        text_2.text = Dictionary.instance?.interviewTestKey2
+        cta1.text = Dictionary.instance?.interviewTestKey3
+        cta2.text = Dictionary.instance?.interviewTestKey4
 
         cta1.setOnClickListener({
-            Toast.makeText(this, dictionary?.interviewTestKey5, Toast.LENGTH_LONG)
+            Log.e(TAG, c.toString())
+            Snackbar.make((c as MainActivity2).findViewById(R.id.frame), Dictionary.instance!!.interviewTestKey5, Snackbar.LENGTH_SHORT).show()
+
+           // Toast.makeText(c, Dictionary.instance?.interviewTestKey5, Toast.LENGTH_LONG)
         })
 
         cta2.setOnClickListener({
-            Toast.makeText(this, dictionary?.interviewTestKey6, Toast.LENGTH_LONG)
+            Snackbar.make((c as MainActivity2).findViewById(R.id.frame), Dictionary.instance!!.interviewTestKey6, Snackbar.LENGTH_SHORT).show()
         })
     }
 }
