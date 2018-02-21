@@ -15,6 +15,7 @@ class APIClient {
     private val BASE_URL = "https://api-lab.petrozone.com/app/v1/"
     private val TENANT_ID = "00000000-0000-0000-0000-000000000000"
     private val VERSION = "0"
+
     private val gson = GsonBuilder().setLenient().create()
     private val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -24,7 +25,8 @@ class APIClient {
     private val api = retrofit.create(APIInterface::class.java)
 
     fun getStringDictionary(callback: GetStringDictionaryCallback): Subscription {
-        return api.getStringDictionary(TENANT_ID, VERSION).subscribeOn(Schedulers.io())
+        return api.getStringDictionary(TENANT_ID, VERSION)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : Subscriber<APIResponse>() {
                     override fun onCompleted() {
